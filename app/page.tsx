@@ -1,15 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-import {Input} from '../components/Input';
+import { Input } from '../components/Input';
 import styled from 'styled-components';
 import { FaUser, FaLock, FaEnvelope, FaSearch } from 'react-icons/fa';
+import { defaultLightTheme, defaultDarkTheme } from '../components/Input/theme';
 
 const ShowcaseWrapper = styled.div`
   padding: 40px;
-  background-color: ${(props) => props.theme.backgroundColor};
-  color: ${(props) => props.theme.textColor};
+  background-color: ${(props) => props.theme.primaryColor};
+  color: ${(props) => props.theme.secondaryColor};
   min-height: 100vh;
   transition: background-color 0.3s ease;
 `;
@@ -53,7 +54,7 @@ const SectionDescription = styled.p`
 
 const InputGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
   gap: 20px;
   margin-bottom: 30px;
 `;
@@ -66,35 +67,18 @@ const Showcase = () => {
     setIsLoading(!isLoading);
   };
 
-  const theme = {
-    backgroundColor: isDarkMode ? '#1a202c' : '#f7fafc',
-    textColor: isDarkMode ? '#f7fafc' : '#1a202c',
-    buttonBackgroundColor: isDarkMode ? '#4a5568' : '#e2e8f0',
-    buttonTextColor: isDarkMode ? '#f7fafc' : '#1a202c',
-    buttonHoverBackgroundColor: isDarkMode ? '#718096' : '#cbd5e0',
-    inputBackgroundColor: isDarkMode ? 'transparent' : '#ffff',
-    filledInputBackgroundColor: isDarkMode ? '#2d3748' : '#EDE9FE',
-    filledInputFocusBackgroundColor: isDarkMode ? '#2d3748' : '#F5F3FF',
-    inputBorderColor: isDarkMode ? '#4a5568' : 'grey',
-    inputTextColor: isDarkMode ? '#f7fafc' : '#1a202c',
-    placeholderColor: isDarkMode ? '#a0aec0' : '#718096',
-    iconColor: isDarkMode ? '#a0aec0' : '#4a5568',
-    helpTextColor: isDarkMode ? '#a0aec0' : '#718096',
-    errorColor: '#f94449',
-    warningColor: '#F59E0B',
-    successColor: '#38a169',
-    disabledBackgroundColor: isDarkMode ? 'rgba(74, 85, 104, 0.2)' : '#dfdfdf',
-    disabledTextColor: isDarkMode ? '#718096' : '#a0aec0',
-  };
+  const theme = isDarkMode ? defaultDarkTheme : defaultLightTheme;
 
   return (
     <ThemeProvider theme={theme}>
       <ShowcaseWrapper>
         <TopButtonsContainer>
-          <ToggleButton onClick={() => setIsDarkMode(!isDarkMode)}>
+          <ToggleButton onClick={() => setIsDarkMode(!isDarkMode)} 
+          style={{ color: `${isDarkMode? "#fff" : "#000"}`, padding: "15px", fontWeight: "500", backgroundColor: `${isDarkMode? "#4A5568" : "#CBD5E0"}`}}>
             Toggle {isDarkMode ? 'Light' : 'Dark'} Mode
           </ToggleButton>
-          <ToggleButton onClick={toggleLoading}>
+          <ToggleButton onClick={toggleLoading}
+          style={{ color: `${isDarkMode? "#fff" : "#000"}`, padding: "15px", fontWeight: "500", backgroundColor: `${isDarkMode? "#4A5568" : "#CBD5E0"}`}}>
             Toggle Loading State
           </ToggleButton>
         </TopButtonsContainer>
@@ -103,19 +87,39 @@ const Showcase = () => {
           <SectionTitle>Basic Input Types</SectionTitle>
           <SectionDescription>Demonstrating various input types supported by our Input component.</SectionDescription>
           <InputGrid>
-            <Input type="text" label="Text Input" placeholder="Enter text" isLoading={isLoading} />
+            <div>
+              <Input
+                value={"Basic Text field"}
+                type="text"
+                label="Text Input"
+                placeholder="Enter text"
+                prefix='@'
+                suffix='.com'
+                icon={<FaUser />}
+              />
+            </div>
+            <div>
+              <Input
+                value={"Email Address"}
+                type="email"
+                label="Email Input"
+                placeholder="Enter email"
+                prefix='@'
+                suffix='.com'
+                icon={<FaEnvelope />}
+              />
+            </div>
             <Input type="password" label="Password Input" placeholder="Enter password" isLoading={isLoading} />
-            <Input type="email" label="Email Input" placeholder="Enter email" isLoading={isLoading} />
-            <Input type="number" label="Number Input" placeholder="Enter number" isLoading={isLoading} />
-            <Input type="date" label="Date Input" isLoading={isLoading} />
-            <Input type="time" label="Time Input" isLoading={isLoading} />
-            <Input type="datetime-local" label="Datetime Input" isLoading={isLoading} />
-            <Input type="month" label="Month Input" isLoading={isLoading} />
+            <Input type="number" label="Number Input" placeholder="Enter number" isLoading={isLoading} setTheme={isDarkMode? 'dark' : 'light'} />
+            <Input type="date" label="Date Input" isLoading={isLoading} setTheme={isDarkMode? 'dark' : 'light'} />
+            <Input type="time" label="Time Input" isLoading={isLoading} setTheme={isDarkMode? 'dark' : 'light'} />
+            <Input type="datetime-local" label="Datetime Input" isLoading={isLoading} setTheme={isDarkMode? 'dark' : 'light'} />
+            <Input type="month" label="Month Input" isLoading={isLoading} setTheme={isDarkMode? 'dark' : 'light'} />
             <Input type="search" label="Search Input" placeholder="Enter search query" isLoading={isLoading} />
             <Input type="url" label="URL Input" placeholder="Enter URL" isLoading={isLoading} />
             <Input type="tel" label="Telephone Input" placeholder="Enter phone number" isLoading={isLoading} />
             <Input type="file" label="File Input" isLoading={isLoading} />
-            <Input as="textarea" label="Textarea" placeholder="Enter multiline text" isLoading={isLoading}/>
+            <Input as="textarea" label="Textarea" placeholder="Enter multiline text" isLoading={isLoading} />
           </InputGrid>
         </Section>
 
@@ -128,7 +132,9 @@ const Showcase = () => {
             <Input variant="filled" label="Filled Input" placeholder="Filled input" isLoading={isLoading} />
             <Input variant="underlined" label="Underlined Input" placeholder="Underlined input" isLoading={isLoading} />
             <Input variant="rounded" label="Rounded Input" placeholder="Rounded input" isLoading={isLoading} />
-            <Input variant="floating" label="Floating Label" placeholder="Floating label input" isLoading={isLoading} />
+            <div style={{ height: "100%", display: "flex", alignItems: "end" }}>
+              <Input variant="floating" label="Floating Label" placeholder="Floating label input" isLoading={isLoading} />
+            </div>
           </InputGrid>
         </Section>
 
@@ -136,12 +142,12 @@ const Showcase = () => {
           <SectionTitle>Input States</SectionTitle>
           <SectionDescription>Various states of the Input component.</SectionDescription>
           <InputGrid>
-            <Input label="Disabled Input" placeholder="Disabled input" isDisabled={true} />
+            <Input label="Disabled Input" value="The Input is Disabled" placeholder="Disabled input" isDisabled={true} />
             <Input label="Read-only Input" placeholder="Read-only input" isReadOnly={true} value="This is read-only" />
+            <Input label="Loading State" placeholder="Loading input" isLoading={isLoading} />
             <Input label="Error State" placeholder="Error input" isError={true} validationMessage="This field has an error" />
             <Input label="Warning State" placeholder="Warning input" isWarning={true} validationMessage="This is a warning" />
             <Input label="Success State" placeholder="Success input" isSuccess={true} validationMessage="This is successful" />
-            <Input label="Loading State" placeholder="Loading input" isLoading={isLoading} />
           </InputGrid>
         </Section>
 
@@ -179,7 +185,6 @@ const Showcase = () => {
               label="Password"
               placeholder="Enter password"
               icon={<FaLock />}
-              isError={true}
               validationMessage="Password must be at least 8 characters"
               isLoading={isLoading}
             />
@@ -189,20 +194,18 @@ const Showcase = () => {
               placeholder="Enter email"
               icon={<FaEnvelope />}
               suffix="@gmail.com"
-              isSuccess={true}
               validationMessage="Email is valid"
               isLoading={isLoading}
             />
-          </InputGrid>
             <Input
-              type="search"
               label="Search"
-              placeholder="Search..."
+              placeholder="Search something..."
               icon={<FaSearch />}
               variant="outlined"
               clearable={true}
               isLoading={isLoading}
             />
+          </InputGrid>
         </Section>
       </ShowcaseWrapper>
     </ThemeProvider>
