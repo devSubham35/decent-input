@@ -6,6 +6,7 @@ import { Input } from '../components/Input';
 import styled from 'styled-components';
 import { FaUser, FaLock, FaEnvelope, FaSearch } from 'react-icons/fa';
 import { defaultLightTheme, defaultDarkTheme } from '../components/Input/theme';
+import Link from 'next/link';
 
 const ShowcaseWrapper = styled.div`
   padding: 40px;
@@ -72,17 +73,25 @@ const Showcase = () => {
   return (
     <ThemeProvider theme={theme}>
       <ShowcaseWrapper>
-        <h1 style={{ fontSize: "25px", fontWeight: "600", color: "#5A5A5A"}}>decent-input demo</h1>
-        <TopButtonsContainer>
-          <ToggleButton onClick={() => setIsDarkMode(!isDarkMode)} 
-          style={{ color: `${isDarkMode? "#fff" : "#000"}`, padding: "15px", fontWeight: "500", backgroundColor: `${isDarkMode? "#4A5568" : "#CBD5E0"}`}}>
-            Toggle {isDarkMode ? 'Light' : 'Dark'} Mode
-          </ToggleButton>
-          <ToggleButton onClick={toggleLoading}
-          style={{ color: `${isDarkMode? "#fff" : "#000"}`, padding: "15px", fontWeight: "500", backgroundColor: `${isDarkMode? "#4A5568" : "#CBD5E0"}`}}>
-            Toggle Loading State
-          </ToggleButton>
-        </TopButtonsContainer>
+        <h1 style={{ fontSize: "25px", fontWeight: "600", color: "#5A5A5A" }}>decent-input demo</h1>
+        <div style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <TopButtonsContainer>
+            <ToggleButton onClick={() => setIsDarkMode(!isDarkMode)}
+              style={{ color: `${isDarkMode ? "#fff" : "#000"}`, padding: "15px", fontWeight: "500", backgroundColor: `${isDarkMode ? "#4A5568" : "#CBD5E0"}` }}>
+              Toggle {isDarkMode ? 'Light' : 'Dark'} Mode
+            </ToggleButton>
+            <ToggleButton onClick={toggleLoading}
+              style={{ color: `${isDarkMode ? "#fff" : "#000"}`, padding: "15px", fontWeight: "500", backgroundColor: `${isDarkMode ? "#4A5568" : "#CBD5E0"}` }}>
+              Toggle Loading State
+            </ToggleButton>
+          </TopButtonsContainer>
+          <Link href="https://decent-input-form.vercel.app/" target='_blank'>
+            <ToggleButton
+              style={{ color: `${isDarkMode ? "#fff" : "#000"}`, padding: "15px", fontWeight: "500", backgroundColor: `${isDarkMode ? "#4A5568" : "#CBD5E0"}` }}>
+              Form Demo
+            </ToggleButton>
+          </Link>
+        </div>
 
         <Section>
           <SectionTitle>Basic Input Types</SectionTitle>
@@ -111,11 +120,11 @@ const Showcase = () => {
               />
             </div>
             <Input type="password" label="Password Input" placeholder="Enter password" isLoading={isLoading} />
-            <Input type="number" label="Number Input" placeholder="Enter number" isLoading={isLoading} setTheme={isDarkMode? 'dark' : 'light'} />
-            <Input type="date" label="Date Input" isLoading={isLoading} setTheme={isDarkMode? 'dark' : 'light'} />
-            <Input type="time" label="Time Input" isLoading={isLoading} setTheme={isDarkMode? 'dark' : 'light'} />
-            <Input type="datetime-local" label="Datetime Input" isLoading={isLoading} setTheme={isDarkMode? 'dark' : 'light'} />
-            <Input type="month" label="Month Input" isLoading={isLoading} setTheme={isDarkMode? 'dark' : 'light'} />
+            <Input type="number" label="Number Input" placeholder="Enter number" isLoading={isLoading} setTheme={isDarkMode ? 'dark' : 'light'} />
+            <Input type="date" label="Date Input" isLoading={isLoading} setTheme={isDarkMode ? 'dark' : 'light'} />
+            <Input type="time" label="Time Input" isLoading={isLoading} setTheme={isDarkMode ? 'dark' : 'light'} />
+            <Input type="datetime-local" label="Datetime Input" isLoading={isLoading} setTheme={isDarkMode ? 'dark' : 'light'} />
+            <Input type="month" label="Month Input" isLoading={isLoading} setTheme={isDarkMode ? 'dark' : 'light'} />
             <Input type="search" label="Search Input" placeholder="Enter search query" isLoading={isLoading} />
             <Input type="url" label="URL Input" placeholder="Enter URL" isLoading={isLoading} />
             <Input type="tel" label="Telephone Input" placeholder="Enter phone number" isLoading={isLoading} />

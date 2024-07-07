@@ -2,9 +2,6 @@ This is a [Next.js](https://nextjs.org/) project
 
 ## Getting Started
 
-First, run the development server :
-yarn dev
-
 # React Input Component
 
 This is a highly customizable and feature-rich Input component for React applications. It's built with TypeScript and styled-components, providing a flexible and reusable input field that can be easily integrated into various projects.
@@ -23,13 +20,34 @@ This is a highly customizable and feature-rich Input component for React applica
 - Help text and validation messages
 - Character limit
 - Fully customizable styling
+- Theme configuration supported
 
 ## Installation
 
-To use this component in your project, you need to have React and styled-components installed. If you haven't already, install them:
+To use this component in your project, you need to 
+
+Create React / Next Js app or existing use in existing project
+
+```bash
+
+  npm i decent-input styled-components react-icons
+  yarn add decent-input styled-components react-icons
+  
+```
+
+
+```bash
+
+import { ThemeProvider } from 'styled-components';
+import { Input, defaultDarkTheme, defaultLightTheme } from 'decent-input';
+
+```
+
+## Custom theme configuration supported
 
 
 ## React Input Component
+
 
 | Prop                | Type                | Description                                            |
 |---------------------|---------------------|--------------------------------------------------------|
@@ -52,59 +70,81 @@ To use this component in your project, you need to have React and styled-compone
 | `validationMessage` | `string`            | Message to display for validation states (error, warning, success) |
 | `value`             | `string`            | Controlled value for the input                         |
 | `onChange`          | `function`          | Function to handle input changes                       |
+| `setTheme`          | `string`            | Switch for Dark or Light Mode                       |
 
 
 
  ## Example
  ```ruby
-
+ 
+"use client" /// for app router user
 import React, { useState } from 'react';
-import Input from 'decent-input';
+import { ThemeProvider } from 'styled-components';
+import { Input, defaultDarkTheme, defaultLightTheme } from 'decent-input';
+
+import { FaUser } from 'react-icons/fa';
+import { RiGitRepositoryPrivateFill } from "react-icons/ri";
 
 const MyForm = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  /// theme state
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
+
+  /// Change the theme
+  const toggleTheme = () => {
+    setIsDarkTheme(!isDarkTheme);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form data:', formData);
-    // You can add your form submission logic here
-  };
+  /// Set the theme
+  const currentTheme = isDarkTheme ? defaultDarkTheme : defaultLightTheme;
+
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Input
-        type="email"
-        name="email"
-        label="Email"
-        placeholder="Enter your email"
-        helpText="Enter a valid email address"
-        value={formData.email}
-        onChange={handleChange}
-      />
-      <Input
-        type="password"
-        name="password"
-        label="Password"
-        placeholder="Enter your password"
-        validationMessage="Password must be at least 8 characters long"
-        value={formData.password}
-        onChange={handleChange}
-      />
-      <button type="submit">Submit</button>
-    </form>
+    <ThemeProvider theme={currentTheme}>
+      <div style={{ backgroundColor: currentTheme.primaryColor }} className='w-full min-h-screen flex flex-col justify-center items-center pt-20 transition-colors duration-300'>
+ 
+
+        <div className='w-[90%] sm:w-[500px] md:w-[600px] xl:w-[30%]'>
+          <h1 style={{ color: currentTheme.secondaryColor }} className='text-[22px] md:text-3xl font-bold mb-8 transition-colors duration-300 text-center'>Form Using decent-input</h1>
+
+            <div style={{ backgroundColor: currentTheme.inputBackgroundColor }} className='w-full p-6 rounded-xl shadow-2xl flex flex-col gap-6 transition-colors duration-300'>
+              <Input
+                value="Enter User Name"
+                type="text"
+                name="userName"
+                label="User Name"
+                placeholder="Enter Your email"
+                suffix='.com'
+                icon={<FaUser />}
+                setTheme={isDarkTheme ? 'dark' : 'light'}
+              />
+
+              <Input
+                value="12345678"
+                type="password"
+                name="password"
+                label="Password"
+                placeholder="Enter your Password"
+                icon={<RiGitRepositoryPrivateFill />}
+                setTheme={isDarkTheme ? 'dark' : 'light'}
+              />
+
+              <button 
+                type="submit" 
+                className={`${isDarkTheme ? 'bg-slate-800 hover:bg-slate-700' : 'bg-violet-500 hover:bg-violet-600'} 
+                  text-white font-bold py-[13px] px-4 rounded transition-colors duration-300`}
+              >
+                Submit
+              </button>
+            </div>
+        </div>
+
+      </div>
+    </ThemeProvider>
   );
 };
 
 export default MyForm;
+
 ```
 
