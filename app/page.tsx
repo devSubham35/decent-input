@@ -72,6 +72,7 @@ const Showcase = () => {
   return (
     <ThemeProvider theme={theme}>
       <ShowcaseWrapper>
+        <h1 style={{ fontSize: "25px", fontWeight: "600", color: "#5A5A5A"}}>decent-input demo</h1>
         <TopButtonsContainer>
           <ToggleButton onClick={() => setIsDarkMode(!isDarkMode)} 
           style={{ color: `${isDarkMode? "#fff" : "#000"}`, padding: "15px", fontWeight: "500", backgroundColor: `${isDarkMode? "#4A5568" : "#CBD5E0"}`}}>
