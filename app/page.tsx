@@ -22,7 +22,6 @@ const TopButtonsContainer = styled.div`
   align-items: center;
   flex-wrap: wrap;
   gap: 20px;
-  margin-bottom: 40px;
 `;
 
 const ToggleButton = styled.button`
@@ -60,6 +59,20 @@ const InputGrid = styled.div`
   margin-bottom: 30px;
 `;
 
+const containerStyles = {
+  width: "100%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between"
+};
+
+const buttonStyles = (isDarkMode: boolean) => ({
+  color: isDarkMode ? "#fff" : "#000",
+  padding: "15px",
+  fontWeight: "600",
+  backgroundColor: isDarkMode ? "#4A5568" : "#CBD5E0"
+});
+
 const Showcase = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -74,20 +87,24 @@ const Showcase = () => {
     <ThemeProvider theme={theme}>
       <ShowcaseWrapper>
         <h1 style={{ fontSize: "25px", fontWeight: "600", color: "#5A5A5A" }}>decent-input demo</h1>
-        <div style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+
+        <div style={containerStyles}>
           <TopButtonsContainer>
-            <ToggleButton onClick={() => setIsDarkMode(!isDarkMode)}
-              style={{ color: `${isDarkMode ? "#fff" : "#000"}`, padding: "15px", fontWeight: "500", backgroundColor: `${isDarkMode ? "#4A5568" : "#CBD5E0"}` }}>
+            <ToggleButton
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              style={buttonStyles(isDarkMode)}
+            >
               Toggle {isDarkMode ? 'Light' : 'Dark'} Mode
             </ToggleButton>
-            <ToggleButton onClick={toggleLoading}
-              style={{ color: `${isDarkMode ? "#fff" : "#000"}`, padding: "15px", fontWeight: "500", backgroundColor: `${isDarkMode ? "#4A5568" : "#CBD5E0"}` }}>
+            <ToggleButton
+              onClick={toggleLoading}
+              style={buttonStyles(isDarkMode)}
+            >
               Toggle Loading State
             </ToggleButton>
           </TopButtonsContainer>
           <Link href="https://decent-input-form.vercel.app/" target='_blank'>
-            <ToggleButton
-              style={{ color: `${isDarkMode ? "#fff" : "#000"}`, padding: "15px", fontWeight: "500", backgroundColor: `${isDarkMode ? "#4A5568" : "#CBD5E0"}` }}>
+            <ToggleButton style={buttonStyles(isDarkMode)}>
               Form Demo
             </ToggleButton>
           </Link>
